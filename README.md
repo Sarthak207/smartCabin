@@ -50,7 +50,7 @@ This project aims to develop a comprehensive holistic cabin environment monitori
 ## 🚀 Setup Instructions
 
 **1. Clone the Repository**<br>
-git clone https://github.com/Desairo/SmartCabin.git<br>
+git clone https://github.com/Sarthak207/smartCabin<br>
 
 **2. Hardware Setup**<br>
 Connect DHT11 to ESP32 GPIOx<br>
