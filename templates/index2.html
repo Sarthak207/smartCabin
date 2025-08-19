@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabin Environment Control</title>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+                    "apiKey": "your-API-key",
+                    "authDomain": "your-app.firebaseapp.com",
+                    "databaseURL": "https://your-app.firebaseio.com",
+                    "projectId": "your-project-id",
+                    "storageBucket": "your-app.appspot.com",
+                    "messagingSenderId": "your-msg-id",
+                    "appId": "your-app-id"
+        };
+
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        function updateData() {
+            const tempRef = ref(database, "HolisticCabin/Temperature");
+            const humidityRef = ref(database, "HolisticCabin/Humidity");
+
+            onValue(tempRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    document.getElementById("temperature").innerText = snapshot.val() + "°C";
+                } else {
+                    document.getElementById("temperature").innerText = "No Data";
+                }
+            });
+
+            onValue(humidityRef, (snapshot) => {
+                document.getElementById("humidity").innerText = snapshot.val() + "%";
+            });
+            // const threatRef = ref(database, "HolisticCabin/ThreatStatus");
+
+            // onValue(threatRef, (snapshot) => {
+            //     const threatDisplay = document.getElementById("threat_status");
+            //     if (snapshot.exists()) {
+            //         const status = snapshot.val();
+            //         threatDisplay.innerText = status === "Threat!" ? "🚨 THREAT DETECTED!" : "✅ No Threat";
+            //         threatDisplay.style.color = status === "Threat" ? "red" : "green";
+            //     } else {
+            //         threatDisplay.innerText = "Status Unknown";
+            //         threatDisplay.style.color = "gray";
+            //     }
+            // });
+
+        }
+
+        // Call function to start fetching data
+        updateData();
+    </script>
+    <script src="/static/main.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .data-box {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🚗 Cabin Environment Control</h1>
+        <p>🌡️ Temperature: <span id="temperature" class="data-box">Loading...</span></p>
+        <p>💧 Humidity: <span id="humidity" class="data-box">Loading...</span></p>
+        <h2 id="predicted_temp">🔮 Predicted Temp: --</h2>
+        <h2 id="fan_speed">🌀 Fan Speed: --</h2>
+    </div>
+    <button onclick="startPrediction()">Start Prediction</button>
+    <div id="status" style="color: red; margin-top: 20px;"></div>
+
+</body>
+
+</html>

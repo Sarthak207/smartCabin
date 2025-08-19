@@ -1,0 +1,40 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code and IDE files
+.vscode/
+*.swp
+*.idea/
+
+# Environment files
+.env
+.env.*
+
+# Firebase credentials (keep secrets out!)
+firebase_config.json
+firebase_credentials.json
+
+# Model and scaler backups (optional if not sharing)
+*.pkl
+*.joblib
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Flask instance folder
+instance/
+
+# Virtual environment
+venv/
+env/
+ENV/
